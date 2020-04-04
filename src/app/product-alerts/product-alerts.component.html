@@ -1,0 +1,5 @@
+<p *ngIf="product.price > COST_FOR_NOTIFICATION">
+  <button (click)="notify.emit()">
+    Notify me
+  </button>
+</p>
