@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { products } from '../products';
+import {CartService} from '../cart.service';
 
 @Component({
   selector: 'app-product-details',
@@ -16,7 +17,9 @@ export class ProductDetailsComponent implements OnInit {
   By injecting the ActivatedRoute (into the constructor), you are configuring the component to use a service.
   While this development phase of application uses this syntax briefly, the 'Managing Data' section
   covers services in more detail.*/
-  constructor(private route: ActivatedRoute, ) {
+  constructor(
+    private route: ActivatedRoute,
+    private serviceCart: CartService) {
   }
 
   /*In this method subscribe to route parameters and fetch the product based on the productId.*/
@@ -27,5 +30,10 @@ export class ProductDetailsComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       this.product = products[+params.get('productId')];
     });
+  }
+
+  addToCart(product){
+    this.serviceCart.addToCart(product);
+    window.alert('The product has been added to the cart!');
   }
 }

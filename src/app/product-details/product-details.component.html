@@ -5,4 +5,7 @@
   <h4>Price: {{ product.price | currency }}</h4>
   <p>Desc: {{ product.description }}</p>
 
+  <button (click) = "addToCart(product)">
+    Buy
+  </button>
 </div>
