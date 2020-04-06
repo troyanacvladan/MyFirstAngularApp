@@ -13,6 +13,7 @@ import {ProductDetailsComponent} from './product-details/product-details.compone
 import {CartService} from './cart.service';
 import {CartComponent} from './cart/cart.component';
 import {ShippingComponent} from './shipping/shipping.component';
+import {ReactiveFormsModule} from '@angular/forms';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import {ShippingComponent} from './shipping/shipping.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [CartService],
   bootstrap: [AppComponent]

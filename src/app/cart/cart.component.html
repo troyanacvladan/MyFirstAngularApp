@@ -1,10 +1,39 @@
 <h2>Cart</h2>
 
-<a [routerLink]="['/shipping']">
-  Shipping Price
-</a>
-
 <div class="cart-item" *ngFor = "let item of selectedItems">
   <span>{{ item.name }}</span>
   <span>{{ item.price | currency }}</span>
 </div>
+
+<br/>
+
+<!--use a 'formGroup' property binding to bind the 'checkoutForm' property to the 'form' tag.-->
+<!--use an 'ngSubmit' event binding za "slusanje" podnosenja form-e
+and and call the onSubmit() method with the 'checkoutForm' property value-->
+<form [formGroup]="checkoutForm" (ngSubmit)="onSubmit(checkoutForm.value)">
+  <!--Add input fields for name and address.
+  Use the 'formControlName' attribute binding to bind the
+  'checkoutForm' form controls for name and address to their input fields.-->
+  <div>
+    <label for="name">
+      Name
+    </label>
+    <input id="name" type="text" formControlName="name">
+  </div>
+
+  <div>
+    <label for="address">
+      Address
+    </label>
+    <input id="address" type="text" formControlName="address">
+  </div>
+
+  <!--include a button to submit the form.-->
+  <button class="button" type="submit">Purchase</button>
+</form>
+
+<br/>
+
+<a [routerLink]="['/shipping']">
+  Shipping Price
+</a>
