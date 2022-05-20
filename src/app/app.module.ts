@@ -14,6 +14,7 @@ import {CartService} from './cart.service';
 import {CartComponent} from './cart/cart.component';
 import {ShippingComponent} from './shipping/shipping.component';
 import {ReactiveFormsModule} from '@angular/forms';
+import { PencilToolComponent } from './pencil-tool/pencil-tool.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import {ReactiveFormsModule} from '@angular/forms';
     ProductAlertsComponent,
     ProductDetailsComponent,
     CartComponent,
-    ShippingComponent
+    ShippingComponent,
+    PencilToolComponent
   ],
   imports: [
     BrowserModule,
