@@ -9,20 +9,67 @@ import { getStroke } from 'perfect-freehand';
 })
 export class PencilToolComponent implements OnInit {
 
-  dragging;
-  mouseActive: boolean = false;
-  @HostListener('pointerdown', ['$event'])
-  onPointerDown(event: PointerEvent): void {
-    this.dragging = true;
+  canvas: HTMLCanvasElement;
+  context: CanvasRenderingContext2D;
+  canvasStaringPointX: number = 0;
+  canvasStaringPointY: number = 0;
+  strokeOptions = {};
+  inputPoints: any;
+  painting: boolean = false;
+
+  @HostListener('mousedown', ['$event'])
+  onPointerDown(event: MouseEvent): void {
+    this.inputPoints = [];
+    this.painting = true;
+  }
+
+  @HostListener('mouseup', ['$event'])
+  onMouseUp(event: MouseEvent): void {
+    this.painting = false;
+    const outlinePoints = getStroke(this.inputPoints, this.strokeOptions);
+    const pathData = this.getSvgPathFromStroke(outlinePoints);
+    const myPath = new Path2D(pathData);
+    this.context.fill(myPath);
+   // this.context.beginPath();
+  }
+
+  @HostListener('pointermove', ['$event'])
+  onMouseMove(event: PointerEvent): void {
+    if (!this.painting) return;
+
+   // this.context.lineTo(event.clientX, event.clientY);
+   // this.context.strokeStyle = "rgba(1,1,0,0.2)";
+   // this.context.globalCompositeOperation = 'destination-out';
+   // this.context.stroke();
+
+   // this.context.beginPath();
+   // this.context.moveTo(event.clientX, event.clientY);
+    this.inputPoints.push([event.pageX - this.canvas.offsetLeft, event.pageY - this.canvas.offsetTop]);
+    this.context.beginPath();
   }
 
   constructor(element:ElementRef) {
     fromEvent(element.nativeElement, "pointermove").subscribe((x: PointerEvent) => {
-      console.log(`${x.clientY} - ${x.clientX}`);
+      //console.log(`${x.clientY} - ${x.clientX}`);
     });
   }
 
   ngOnInit(): void {
+
+    this.canvas = <HTMLCanvasElement>document.getElementById('test-canvas');
+    this.context = this.canvas?.getContext('2d');
+    this.context.fillStyle = "red";
+   // this.context.lineWidth = 100;
+  //  this.context.lineCap = "round";
+  //  this.context.fillRect(0, 0, window.innerWidth, window.innerHeight);
+    this.strokeOptions = {
+      size: 8, // draw line width
+      thinning: 0.5
+    }
+
+    const rect = this.canvas.getBoundingClientRect();
+    this.canvasStaringPointX = rect.left;
+    this.canvasStaringPointY = rect.top;
 
     //To use this library, import the getStroke function and pass it an array of input points,
     // such as those recorded from a user's mouse movement.
@@ -47,10 +94,10 @@ export class PencilToolComponent implements OnInit {
     const pathData = this.getSvgPathFromStroke(outlinePoints);
 
     //if you are rendering with HTML Canvas, you can pass the string to a Path2D constructor).
-    const canvas = <HTMLCanvasElement>document.getElementById('test-canvas');
-    const ctx = canvas.getContext('2d');
+   // const canvas = <HTMLCanvasElement>document.getElementById('test-canvas');
+   // const context = canvas.getContext('2d');
     const myPath = new Path2D(pathData);
-    ctx.fill(myPath);
+    //this.context.fill(myPath);
   }
 
   getSvgPathFromStroke(stroke): any {
@@ -67,9 +114,5 @@ export class PencilToolComponent implements OnInit {
 
     d.push('Z')
     return d.join(' ')
-  }
-
-  mouseChange() {
-    this.mouseActive=!this.mouseActive;
   }
 }

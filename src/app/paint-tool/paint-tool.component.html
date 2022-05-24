@@ -1,0 +1,12 @@
+<div>
+  <select class="example-radio-group" [(ngModel)]="currentTool">
+    <option class="example-radio-button" *ngFor="let action of paintTools" [value]="action">
+      {{action}}
+    </option>
+  </select>
+</div>
+<canvas id="test-canvas" class="example-canvas"
+        (mousedown)="onMouseDown($event)"
+        (mousemove)="onMouseMove($event)"
+        (mouseup)="onMouseUp($event)" >
+</canvas>

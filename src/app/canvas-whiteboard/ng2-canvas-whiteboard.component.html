@@ -1,0 +1,8 @@
+<canvas-whiteboard #canvasWhiteboard
+                   [batchUpdateTimeoutDuration]="100"
+                   [options] = "canvasOptions"
+                   (onBatchUpdate)="sendBatchUpdate($event)"
+                   (onClear)="onCanvasClear()"
+                   (onUndo)="onCanvasUndo($event)"
+                   (onRedo)="onCanvasRedo($event)">
+</canvas-whiteboard>
