@@ -5,6 +5,9 @@
     </option>
   </select>
 </div>
+<a id="save-as-image" class="example-button" (click)="saveCanvasAsImage()">Save as Image</a>
+<!--div>Load: <input type="file" id="load"></div-->
+
 <canvas id="test-canvas" class="example-canvas"
         (mousedown)="onMouseDown($event)"
         (mousemove)="onMouseMove($event)"

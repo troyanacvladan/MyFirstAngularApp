@@ -41,7 +41,8 @@ import { Ng2CanvasWhiteboardComponent } from './canvas-whiteboard/ng2-canvas-whi
         HttpClientModule,
         ReactiveFormsModule,
         FormsModule,
-        CanvasWhiteboardModule
+        CanvasWhiteboardModule,
+
     ],
   providers: [CartService],
   bootstrap: [AppComponent]
