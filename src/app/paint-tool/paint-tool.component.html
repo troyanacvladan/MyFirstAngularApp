@@ -10,6 +10,9 @@
 
 <canvas id="test-canvas" class="example-canvas"
         (mousedown)="onMouseDown($event)"
+        (touchstart)="onTouchStart($event)"
         (mousemove)="onMouseMove($event)"
-        (mouseup)="onMouseUp($event)" >
+        (touchmove)="onTouchMove($event)"
+        (mouseup)="onMouseUp($event)"
+        (touchend)="onTouchEnd($event)">
 </canvas>

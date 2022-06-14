@@ -187,6 +187,13 @@ export class PaintToolComponent implements OnInit {
     }
   }
 
+  onTouchStart($event: TouchEvent) {
+    if(this.currentTool === 'pen' || this.currentTool === 'highlighter'){
+      this.toolActive = true;
+      this.onTouchMove($event);
+    }
+  }
+
   onMouseUp($event: MouseEvent) {
     if(this.currentTool === 'pen' || this.currentTool === 'highlighter'){
       this.toolActive = false;
@@ -194,13 +201,43 @@ export class PaintToolComponent implements OnInit {
     }
   }
 
+  onTouchEnd($event: TouchEvent) {
+    if(this.currentTool === 'pen' || this.currentTool === 'highlighter'){
+      this.toolActive = false;
+      this.context.beginPath();
+    }
+  }
+
   onMouseMove(event: MouseEvent) {
+    this.onMoveAction(event);
+  }
+
+  onTouchMove(event: TouchEvent) {
+    this.onMoveAction(event);
+  }
+
+  private onMoveAction(event):void{
+    let x: number = 0;
+    let y: number = 0;
+
+    if(event instanceof MouseEvent){
+      x = event.pageX;
+      y = event.pageY;
+    } else if (event instanceof TouchEvent){
+      x = event.touches[0]?.pageX;
+      y = event.touches[0]?.pageY;
+    }
+
+    let e = {
+      pageX: x,
+      pageY: y
+    }
     switch (this.currentTool) {
       case 'pen':
-        this.penTool(event);
+        this.penTool(e);
         break;
       case 'highlighter':
-        this.highlighterTool(event)
+        this.highlighterTool(e)
         break;
     }
   }
@@ -222,7 +259,7 @@ export class PaintToolComponent implements OnInit {
   }
 
 
-  private highlighterTool(event: MouseEvent) {
+  private highlighterTool(event) {
     if(!this.toolActive)return;
     this.context.globalCompositeOperation = 'multiply';
     this.context.fillStyle = this.highlightOptions.fillStyle;

@@ -17,14 +17,16 @@ export class PencilToolComponent implements OnInit {
   inputPoints: any;
   painting: boolean = false;
 
-  @HostListener('mousedown', ['$event'])
-  onPointerDown(event: MouseEvent): void {
+  //@HostListener('mousedown', ['$event'])
+  @HostListener('touchstart', ['$event'])
+  onPointerDown(event: any): void {
     this.inputPoints = [];
     this.painting = true;
   }
 
-  @HostListener('mouseup', ['$event'])
-  onMouseUp(event: MouseEvent): void {
+  //@HostListener('mouseup', ['$event'])
+  @HostListener('touchend', ['$event'])
+  onMouseUp(event: any): void {
     this.painting = false;
     const outlinePoints = getStroke(this.inputPoints, this.strokeOptions);
     const pathData = this.getSvgPathFromStroke(outlinePoints);
@@ -33,8 +35,9 @@ export class PencilToolComponent implements OnInit {
    // this.context.beginPath();
   }
 
+  //@HostListener('pointermove', ['$event'])
   @HostListener('pointermove', ['$event'])
-  onMouseMove(event: PointerEvent): void {
+  onMouseMove(event: any): void {
     if (!this.painting) return;
 
    // this.context.lineTo(event.clientX, event.clientY);
